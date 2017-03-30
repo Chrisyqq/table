@@ -19,26 +19,25 @@ changeTableAll.onclick=function () {
     var nameV = addPerson.children[0].value;
     var heightV = addPerson.children[1].value;
     var weightV = addPerson.children[2].value;
-    tableAll.innerHTML+= '<tr><th>' + nameV + '</th><th>' + heightV + 'cm' +'</th><th>' + weightV + 'kg' +'</th><th><button name="'+ dataLength + 1 +'" id="dataDelete'+ dataLength  +'">delete</button></tr>';
+    tableAll.innerHTML+= '<tr><th>' + nameV + '</th><th>' + heightV + 'cm' +'</th><th>' + weightV + 'kg' +'</th><th><button name="'+ dataLength +'" id="dataDelete'+ dataLength  +'">delete</button></tr>';
     localData.push({name:nameV,height:heightV,weight:weightV});
     dataLength = localData.length;
+    //针对每个Buttom增加click事件
     for(var i=0;i<localData.length;i++){
         document.getElementById('dataDelete'+i).addEventListener('click',function () {
-            tableAll.children[i].remove();
-            delete localData[i-1];
-            console.log(localData);
-            dataLength = localData.length;
+            localData[this.getAttribute('name')]=null;//删除对应数据
+            // console.log(this.getAttribute('id'),localData)
+            this.parentNode.parentNode.remove();//删除当前数据
         });
     }
 };
-//删除当前数据
+//针对每个Buttom增加click事件
 (function () {
     for(var i=0;i<dataLength;i++){
         document.getElementById('dataDelete'+i).addEventListener('click',function () {
-            tableAll.children[i].remove();
-            delete localData[i-1];
-            console.log(localData)
-            dataLength=localData.length;
+            localData[this.getAttribute('name')]=null;//删除对应数据
+            // console.log(this.getAttribute('id'),localData)
+            this.parentNode.parentNode.remove();//删除当前数据
         });
     }
 })();
