@@ -4,7 +4,6 @@
 var localData = [{name:'小明',height:'180',weight:'70'},{name:'小王',height:'178',weight:'66'},{name:'小王',height:'178',weight:'66'}];
 var addPerson = document.getElementById('addPerson');
 var changeTableAll = document.getElementById('changeTableAll');
-var dataDelete = document.getElementById('dataDelete');
 var dataLength;
 dataLength = localData.length;
 var tableAll = document.getElementById('tableAll');
@@ -21,23 +20,15 @@ changeTableAll.onclick=function () {
     var weightV = addPerson.children[2].value;
     tableAll.innerHTML+= '<tr><th>' + nameV + '</th><th>' + heightV + 'cm' +'</th><th>' + weightV + 'kg' +'</th><th><button name="'+ dataLength +'" id="dataDelete'+ dataLength  +'">delete</button></tr>';
     localData.push({name:nameV,height:heightV,weight:weightV});
-    dataLength = localData.length;
-    //针对每个Buttom增加click事件
-    for(var i=0;i<localData.length;i++){
-        document.getElementById('dataDelete'+i).addEventListener('click',function () {
-            localData[this.getAttribute('name')]=null;//删除对应数据
-            // console.log(this.getAttribute('id'),localData)
-            this.parentNode.parentNode.remove();//删除当前数据
-        });
-    }
+    console.log(localData);
 };
-//针对每个Buttom增加click事件
-(function () {
-    for(var i=0;i<dataLength;i++){
-        document.getElementById('dataDelete'+i).addEventListener('click',function () {
-            localData[this.getAttribute('name')]=null;//删除对应数据
-            // console.log(this.getAttribute('id'),localData)
-            this.parentNode.parentNode.remove();//删除当前数据
-        });
+//数据删除
+document.getElementById('tableAll').addEventListener('click',function () {
+    var ev = ev || window.event;
+    var target = ev.target || ev.srcElement;
+    if(target.nodeName.toLocaleLowerCase() == 'button'){
+        target.parentNode.parentNode.remove();
+        localData[target.name] = null;
+        console.log(localData);
     }
-})();
+});
